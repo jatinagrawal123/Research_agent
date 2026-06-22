@@ -1,0 +1,421 @@
+/* ── Layout shell ─────────────────────────────────────────────── */
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Ambient glow orbs ────────────────────────────────────────── */
+.app-orbit {
+  position: fixed;
+  width: 44rem;
+  height: 44rem;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.app-orbit-left {
+  top: -16rem;
+  left: -14rem;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.18) 0%, transparent 70%);
+  animation: orb-float-left 14s ease-in-out infinite;
+}
+
+.app-orbit-right {
+  top: 28rem;
+  right: -16rem;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.22) 0%, transparent 70%);
+  animation: orb-float-right 18s ease-in-out infinite;
+}
+
+@keyframes orb-float-left {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(3rem, 2rem) scale(1.08); }
+}
+@keyframes orb-float-right {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(-2rem, -3rem) scale(1.1); }
+}
+
+/* ── Hero panel ───────────────────────────────────────────────── */
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left,  rgba(0, 229, 255, 0.07) 0%, transparent 40%),
+    radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.10) 0%, transparent 36%);
+  pointer-events: none;
+}
+
+/* ── Gradient hero heading ────────────────────────────────────── */
+.hero-gradient-text {
+  background: linear-gradient(
+    120deg,
+    #ffffff 0%,
+    #a8eeff 30%,
+    #00e5ff 55%,
+    #c4b5fd 80%,
+    #8b5cf6 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: gradient-pan 8s linear infinite;
+}
+
+@keyframes gradient-pan {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Metric cards ─────────────────────────────────────────────── */
+.hero-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  gap: 1.5rem;
+  align-items: end;
+}
+
+.hero-stats-wrap {
+  display: grid;
+  gap: 1rem;
+}
+
+.metric-card {
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 28px rgba(0, 229, 255, 0.18), 0 12px 40px rgba(0,0,0,0.45) !important;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,229,255,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.metric-label {
+  letter-spacing: 0.14em;
+  color: rgba(0, 229, 255, 0.65) !important;
+  font-size: 0.68rem !important;
+}
+
+/* ── Query panel – animated gradient border ───────────────────── */
+.query-panel {
+  position: relative;
+  z-index: 0;
+  background: rgba(6, 18, 40, 0.82) !important;
+}
+
+.query-panel::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    #00e5ff 0%,
+    #8b5cf6 25%,
+    #040c18 50%,
+    #8b5cf6 75%,
+    #00e5ff 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: border-spin 5s linear infinite;
+  z-index: -1;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes border-spin {
+  0%   { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+/* ── Content grid ─────────────────────────────────────────────── */
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.4fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Surface cards ────────────────────────────────────────────── */
+.surface-card {
+  transition: box-shadow 0.35s ease;
+}
+
+.surface-card:hover {
+  box-shadow: 0 0 32px rgba(0, 229, 255, 0.08), 0 20px 60px rgba(0,0,0,0.55) !important;
+}
+
+/* ── Task cards ───────────────────────────────────────────────── */
+.task-card {
+  border: 1px solid rgba(0, 229, 255, 0.1) !important;
+  background: rgba(0, 229, 255, 0.03) !important;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.task-card:hover {
+  border-color: rgba(0, 229, 255, 0.25) !important;
+  background: rgba(0, 229, 255, 0.07) !important;
+}
+
+.task-index {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  color: rgba(0, 229, 255, 0.6);
+  margin-bottom: 0.5rem;
+}
+
+/* ── Report card ──────────────────────────────────────────────── */
+.report-card {
+  min-height: 42rem;
+}
+
+/* ── Report body content ──────────────────────────────────────── */
+.report-body {
+  max-width: 74ch;
+}
+
+.report-body p {
+  margin: 0 0 1rem;
+  color: #c8dff0;
+}
+
+.report-body ul {
+  margin: 0 0 1.25rem;
+  color: #c8dff0;
+}
+
+.report-body li {
+  color: #c8dff0;
+  line-height: 1.8;
+}
+
+.report-body h5 {
+  border-left: 3px solid #00e5ff;
+  padding-left: 0.85rem;
+  box-shadow: -4px 0 18px rgba(0, 229, 255, 0.22);
+}
+
+/* ── Report empty state ───────────────────────────────────────── */
+.report-empty {
+  min-height: 24rem;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 2rem;
+  border: 1px dashed rgba(0, 229, 255, 0.15);
+  border-radius: 1.25rem;
+  background: rgba(0, 229, 255, 0.02);
+}
+
+/* ── Loading step indicator ───────────────────────────────────── */
+.loading-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.loading-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  opacity: 0.35;
+  transition: opacity 0.4s ease;
+}
+
+.loading-step.active {
+  opacity: 1;
+}
+
+.loading-step.done {
+  opacity: 0.55;
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 229, 255, 0.3);
+  flex-shrink: 0;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.loading-step.active .step-dot {
+  background: #00e5ff;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.8);
+  animation: dot-pulse 1.2s ease-in-out infinite;
+}
+
+.loading-step.done .step-dot {
+  background: rgba(0, 230, 118, 0.7);
+}
+
+@keyframes dot-pulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(0, 229, 255, 0.6); }
+  50%       { box-shadow: 0 0 20px rgba(0, 229, 255, 1); }
+}
+
+/* ── Sources accordion ────────────────────────────────────────── */
+.evidence-accordion {
+  border-radius: 14px !important;
+  border: 1px solid rgba(0, 229, 255, 0.1) !important;
+  background: rgba(6, 18, 40, 0.80) !important;
+  transition: border-color 0.25s ease;
+}
+
+.evidence-accordion:hover {
+  border-color: rgba(0, 229, 255, 0.22) !important;
+}
+
+.evidence-accordion::before {
+  display: none;
+}
+
+.source-summary {
+  white-space: pre-wrap;
+  color: #7ea8c4;
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .hero-grid,
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .app-orbit {
+    width: 24rem;
+    height: 24rem;
+  }
+  .report-card {
+    min-height: auto;
+  }
+}
+
+/* ── Light mode overrides ─────────────────────────────────────── */
+body[data-mode="light"] .app-orbit-left {
+  background: radial-gradient(circle, rgba(11, 110, 105, 0.18) 0%, transparent 70%);
+}
+body[data-mode="light"] .app-orbit-right {
+  background: radial-gradient(circle, rgba(199, 104, 47, 0.18) 0%, transparent 70%);
+}
+body[data-mode="light"] .hero-gradient-text {
+  background: linear-gradient(120deg, #064e4a 0%, #0b6e69 35%, #c7682f 70%, #8f4316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: none;
+}
+body[data-mode="light"] .metric-label {
+  color: rgba(11, 110, 105, 0.75) !important;
+}
+body[data-mode="light"] .metric-card:hover {
+  box-shadow: 0 0 24px rgba(11, 110, 105, 0.14), 0 12px 40px rgba(0,0,0,0.1) !important;
+}
+body[data-mode="light"] .query-panel {
+  background: rgba(255, 251, 245, 0.94) !important;
+  isolation: isolate;
+}
+body[data-mode="light"] .query-panel .MuiFormHelperText-root {
+  color: rgba(19, 35, 33, 0.72) !important;
+}
+body[data-mode="light"] .query-panel .MuiTypography-body2 {
+  color: rgba(19, 35, 33, 0.76) !important;
+}
+body[data-mode="light"] .query-panel .MuiInputLabel-root {
+  background: rgba(255, 251, 245, 0.94);
+  padding: 0 0.3rem;
+  border-radius: 0.4rem;
+}
+body[data-mode="light"] .query-panel::before {
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    #0b6e69 0%,
+    #c7682f 25%,
+    #f3ede2 50%,
+    #c7682f 75%,
+    #0b6e69 100%
+  );
+}
+body[data-mode="light"] .task-card {
+  border: 1px solid rgba(11, 110, 105, 0.14) !important;
+  background: rgba(11, 110, 105, 0.03) !important;
+}
+body[data-mode="light"] .task-card:hover {
+  border-color: rgba(11, 110, 105, 0.28) !important;
+  background: rgba(11, 110, 105, 0.06) !important;
+}
+body[data-mode="light"] .task-index {
+  color: rgba(11, 110, 105, 0.65);
+}
+body[data-mode="light"] .report-body p,
+body[data-mode="light"] .report-body ul,
+body[data-mode="light"] .report-body li {
+  color: #243634;
+}
+body[data-mode="light"] .report-body h5 {
+  border-left-color: #0b6e69;
+  box-shadow: -4px 0 14px rgba(11, 110, 105, 0.14);
+}
+body[data-mode="light"] .report-empty {
+  border-color: rgba(11, 110, 105, 0.18);
+  background: rgba(11, 110, 105, 0.03);
+}
+body[data-mode="light"] .source-summary {
+  color: #425250;
+}
+body[data-mode="light"] .evidence-accordion {
+  border: 1px solid rgba(11, 110, 105, 0.13) !important;
+}
+body[data-mode="light"] .evidence-accordion:hover {
+  border-color: rgba(11, 110, 105, 0.28) !important;
+}
+body[data-mode="light"] .loading-step.active .step-dot {
+  background: #0b6e69;
+  box-shadow: 0 0 10px rgba(11, 110, 105, 0.7);
+  animation: none;
+}
+body[data-mode="light"] .loading-step.done .step-dot {
+  background: rgba(11, 110, 105, 0.55);
+}
+body[data-mode="light"] .surface-card:hover {
+  box-shadow: 0 0 24px rgba(11, 110, 105, 0.07), 0 16px 48px rgba(0,0,0,0.1) !important;
+}
+
